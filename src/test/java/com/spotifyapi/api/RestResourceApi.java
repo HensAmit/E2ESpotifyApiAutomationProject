@@ -5,6 +5,8 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 
 import static com.spotifyapi.api.SpecBuilder.*;
+import static com.spotifyapi.constants.RouteConstants.API;
+import static com.spotifyapi.constants.RouteConstants.TOKEN;
 import static io.restassured.RestAssured.given;
 
 public class RestResourceApi {
@@ -47,7 +49,7 @@ public class RestResourceApi {
         return given(getAccountRequestSpecification())
                 .formParams(formParams)
                 .when()
-                .post("api/token")
+                .post(API + TOKEN)
                 .then()
                 .spec(getResponseSpecification())
                 .extract()

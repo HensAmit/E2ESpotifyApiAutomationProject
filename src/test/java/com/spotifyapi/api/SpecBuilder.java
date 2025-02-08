@@ -7,12 +7,14 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
+import static com.spotifyapi.constants.RouteConstants.BASE_PATH;
+
 public class SpecBuilder {
 
     public static RequestSpecification getRequestSpecification() {
         return new RequestSpecBuilder()
                 .setBaseUri("https://api.spotify.com")
-                .setBasePath("/v1")
+                .setBasePath(BASE_PATH)
                 .setContentType(ContentType.JSON)
                 .log(LogDetail.ALL).build();
     }
