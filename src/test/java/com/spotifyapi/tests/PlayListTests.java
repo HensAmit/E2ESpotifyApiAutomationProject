@@ -32,8 +32,8 @@ public class PlayListTests {
     @Test
     public void getPlaylist() {
         Playlist requestPlaylist = new Playlist()
-                .setName("Test Playlist 2 updated")
-                .setDescription("My 2nd playlist updated")
+                .setName("Test Playlist 2 altered")
+                .setDescription("My 2nd playlist altered")
                 .setPublic(true);
 
         Response response = PlaylistApi.get("3RE2lEzzHhPqdyG56HPRva");
