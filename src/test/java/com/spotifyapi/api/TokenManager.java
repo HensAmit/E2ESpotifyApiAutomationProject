@@ -1,13 +1,9 @@
 package com.spotifyapi.api;
 
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.time.Instant;
 import java.util.HashMap;
-
-import static com.spotifyapi.api.SpecBuilder.getResponseSpecification;
-import static io.restassured.RestAssured.given;
 
 public class TokenManager {
     private static String accessToken;
@@ -27,7 +23,7 @@ public class TokenManager {
         } catch (Exception e) {
             throw new RuntimeException("ABORT! Failed to get Token.");
         }
-        return  "Bearer " + accessToken;
+        return "Bearer " + accessToken;
     }
 
     private static Response renewToken() {
@@ -37,17 +33,7 @@ public class TokenManager {
         formParams.put("client_id", "83394bee777c45bdaead478454dce1ee");
         formParams.put("client_secret", "3ca1ba57bd31462e9f9b2a0b1ca9abf2");
 
-        Response response = given()
-                .baseUri("https://accounts.spotify.com")
-                .formParams(formParams)
-                .contentType(ContentType.URLENC)
-                .log().all()
-                .when()
-                .post("api/token")
-                .then()
-                .spec(getResponseSpecification())
-                .extract()
-                .response();
+        Response response = RestResourceApi.postAccount(formParams);
 
         if (response.statusCode() != 200) {
             throw new RuntimeException("ABORT! Renew Token Failed.");

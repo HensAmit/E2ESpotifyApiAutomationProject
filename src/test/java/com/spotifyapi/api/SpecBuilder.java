@@ -22,4 +22,11 @@ public class SpecBuilder {
                 .log(LogDetail.ALL)
                 .build();
     }
+
+    public static RequestSpecification getAccountRequestSpecification() {
+        return new RequestSpecBuilder()
+                .setBaseUri("https://accounts.spotify.com")
+                .setContentType(ContentType.URLENC)
+                .log(LogDetail.ALL).build();
+    }
 }
