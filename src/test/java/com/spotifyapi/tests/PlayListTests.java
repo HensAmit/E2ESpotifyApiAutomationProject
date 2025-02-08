@@ -2,38 +2,16 @@ package com.spotifyapi.tests;
 
 import com.spotifyapi.pojo.Error;
 import com.spotifyapi.pojo.Playlist;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import static com.spotifyapi.api.SpecBuilder.getRequestSpecification;
+import static com.spotifyapi.api.SpecBuilder.getResponseSpecification;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class PlayListTests {
-    RequestSpecification requestSpecification;
-    ResponseSpecification responseSpecification;
-    String accessToken = "Bearer BQCd_lAI9wSLqSQlYTPcPJyILjF4Ex8Wx3PrFXC9GPxXQ8QBPIhCWmbaGw5QXugD5mwmtN8I4dBxTq12MyumLikugQQsmARzIu7ri7dygzrzCM9PpPTf5xye-J4SgbpSjvAbqfo7n6j2NVwD3Igr7RM5jODmF5hB3pBepcFWA47T8IWZiHmSoK6RqHS7UYvnsGgxD_8gszc7bnkqq3xYGak7oUTbK4RQnQoNlOXmNR-4zrY9hwNPkEKjT_XE2G9gQp58XFW5DT1_WJ60MBjQ-R_gxGIlvIL9czZhAWHA-1uubQe7WaXK";
-
-    @BeforeClass
-    public void beforeClass() {
-        RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder()
-                .setBaseUri("https://api.spotify.com")
-                .setBasePath("/v1")
-                .addHeader("Authorization", accessToken)
-                .setContentType(ContentType.JSON)
-                .log(LogDetail.ALL);
-        requestSpecification = requestSpecBuilder.build();
-
-        ResponseSpecBuilder responseSpecBuilder = new ResponseSpecBuilder()
-                .log(LogDetail.ALL);
-        responseSpecification = responseSpecBuilder.build();
-    }
 
     @Test
     public void createPlaylist() {
@@ -42,12 +20,12 @@ public class PlayListTests {
                 .setDescription("My 1st playlist")
                 .setPublic(false);
 
-        Playlist responsePlaylist = given(requestSpecification)
+        Playlist responsePlaylist = given(getRequestSpecification())
                 .body(requestPlaylist)
                 .when()
                 .post("users/3133u3fxpnaisnp6inrt3t6fxrvm/playlists")
                 .then()
-                .spec(responseSpecification)
+                .spec(getResponseSpecification())
                 .assertThat()
                 .statusCode(201)
                 .contentType(ContentType.JSON)
@@ -67,12 +45,12 @@ public class PlayListTests {
                 .setDescription("My 1st playlist")
                 .setPublic(true);
 
-        Playlist responsePlaylist = given(requestSpecification)
+        Playlist responsePlaylist = given(getRequestSpecification())
                 .pathParam("playlistId", "3RE2lEzzHhPqdyG56HPRva")
                 .when()
                 .get("playlists/{playlistId}")
                 .then()
-                .spec(responseSpecification)
+                .spec(getResponseSpecification())
                 .assertThat()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
@@ -92,13 +70,13 @@ public class PlayListTests {
                 .setDescription("My 2nd playlist")
                 .setPublic(false);
 
-        given(requestSpecification)
+        given(getRequestSpecification())
                 .pathParam("playlistId", "3RE2lEzzHhPqdyG56HPRva")
                 .body(requestPlaylist)
                 .when()
                 .put("playlists/{playlistId}")
                 .then()
-                .spec(responseSpecification)
+                .spec(getResponseSpecification())
                 .assertThat()
                 .statusCode(200);
     }
@@ -110,12 +88,12 @@ public class PlayListTests {
                 .setDescription("Playlist Nil")
                 .setPublic(false);
 
-        Error error = given(requestSpecification)
+        Error error = given(getRequestSpecification())
                 .body(requestPlaylist)
                 .when()
                 .post("users/3133u3fxpnaisnp6inrt3t6fxrvm/playlists")
                 .then()
-                .spec(responseSpecification)
+                .spec(getResponseSpecification())
                 .assertThat()
                 .statusCode(400)
                 .contentType(ContentType.JSON)
@@ -143,7 +121,7 @@ public class PlayListTests {
                 .when()
                 .post("users/3133u3fxpnaisnp6inrt3t6fxrvm/playlists")
                 .then()
-                .spec(responseSpecification)
+                .spec(getResponseSpecification())
                 .assertThat()
                 .statusCode(401)
                 .contentType(ContentType.JSON)
