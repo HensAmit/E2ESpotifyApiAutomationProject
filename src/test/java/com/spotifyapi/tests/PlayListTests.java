@@ -3,6 +3,7 @@ package com.spotifyapi.tests;
 import com.spotifyapi.api.applicationApi.PlaylistApi;
 import com.spotifyapi.pojo.Error;
 import com.spotifyapi.pojo.Playlist;
+import com.spotifyapi.utils.DataLoader;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
@@ -36,7 +37,7 @@ public class PlayListTests {
                 .setDescription("My 2nd playlist altered")
                 .setPublic(true);
 
-        Response response = PlaylistApi.get("3RE2lEzzHhPqdyG56HPRva");
+        Response response = PlaylistApi.get(DataLoader.getInstance().getPropertyData("playlist_id"));
         assertThat(response.statusCode(), equalTo(200));
         assertThat(response.contentType(), containsString("application/json"));
 
@@ -53,7 +54,7 @@ public class PlayListTests {
                 .setDescription("My 2nd playlist altered")
                 .setPublic(false);
 
-        Response response = PlaylistApi.update(requestPlaylist, "3RE2lEzzHhPqdyG56HPRva");
+        Response response = PlaylistApi.update(requestPlaylist, DataLoader.getInstance().getPropertyData("playlist_id"));
         assertThat(response.statusCode(), equalTo(200));
     }
 
