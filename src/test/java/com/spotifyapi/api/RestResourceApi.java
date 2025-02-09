@@ -1,5 +1,6 @@
 package com.spotifyapi.api;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import static com.spotifyapi.constants.RouteConstants.TOKEN;
 import static io.restassured.RestAssured.given;
 
 public class RestResourceApi {
+
+    @Step
     public static Response post(Object payload, String accessToken, String path) {
         return given(getRequestSpecification())
                 .header("Authorization", accessToken)
@@ -22,6 +25,7 @@ public class RestResourceApi {
                 .response();
     }
 
+    @Step
     public static Response get(String accessToken, String path) {
         return given(getRequestSpecification())
                 .header("Authorization", accessToken)
@@ -33,6 +37,7 @@ public class RestResourceApi {
                 .response();
     }
 
+    @Step
     public static Response update(Object payload, String accessToken, String path) {
         return given(getRequestSpecification())
                 .header("Authorization", accessToken)
@@ -45,6 +50,7 @@ public class RestResourceApi {
                 .response();
     }
 
+    @Step
     public static Response postAccount(HashMap<String, String> formParams) {
         return given(getAccountRequestSpecification())
                 .formParams(formParams)

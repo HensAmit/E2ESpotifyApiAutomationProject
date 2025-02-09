@@ -4,6 +4,8 @@ import com.spotifyapi.api.applicationApi.PlaylistApi;
 import com.spotifyapi.pojo.Error;
 import com.spotifyapi.pojo.Playlist;
 import com.spotifyapi.utils.DataLoader;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
@@ -13,6 +15,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class PlayListTests {
 
+    @Step("Building Playlist object")
     public Playlist playlistBuilder(String name, String description, boolean _public) {
         return Playlist.builder()
                 .name(name)
@@ -21,7 +24,8 @@ public class PlayListTests {
                 .build();
     }
 
-    @Test
+    @Description("Creating a new playlist for the user")
+    @Test(description = "Create a Playlist")
     public void createPlaylist() {
         Playlist requestPlaylist = playlistBuilder("Test Playlist 3", "My 3rd playlist", false);
 
